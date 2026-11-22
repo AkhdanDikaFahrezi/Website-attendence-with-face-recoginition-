@@ -11,7 +11,7 @@ supabase-auth==2.34.1
 postgrest==2.34.1
 realtime==2.34.1
 storage3==2.34.1
-supabase-functions==2.34.0
+supabase-functions==2.34.1
 httpx==0.28.1
 PyJWT[crypto]==2.15.1
 
