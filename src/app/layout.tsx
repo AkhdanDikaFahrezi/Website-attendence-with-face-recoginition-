@@ -1,54 +1,27 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Parkinsans } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
-import { ThemeProvider } from "@/components/theme-provider";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const parkinsans = Parkinsans({
-  variable: "--font-parkinsans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  fallback: ["system-ui", "sans-serif"],
-  adjustFontFallback: false,
-});
+import type { Metadata } from 'next'
+import './globals.css'
+import '../styles/fonts.css'; // Import fonts separately for Turbopack compatibility
+import { AuthProvider } from '@/contexts/AuthContext'
+import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
-  title: "Face Attendance - Sistem Absensi dengan Pengenalan Wajah",
-  description:
-    "Sistem presensi modern dengan teknologi pengenalan wajah yang aman dan efisien untuk kehadiran mahasiswa",
-};
+  title: 'Sistem Presensi & Izin Mahasiswa',
+  description: 'Aplikasi presensi dan pengajuan izin mahasiswa',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="id" suppressHydrationWarning>
-        <body
-          className={`${geistSans.className} ${geistMono.className} ${parkinsans.className} antialiased`}
-        >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
-  );
+    <html lang="en">
+      <body className={`antialiased`}>
+        <AuthProvider>
+          {children}
+          <Toaster />
+        </AuthProvider>
+      </body>
+    </html>
+  )
 }

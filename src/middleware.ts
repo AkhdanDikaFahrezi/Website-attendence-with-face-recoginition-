@@ -1,11 +1,25 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-const isProtectedRoute = createRouteMatcher(["/absen", "/profil", "/riwayat", "/izin(.*)"]);
+// Simple middleware that allows all routes to pass through
+// Authentication is handled client-side in the components using localStorage
+export default function middleware(request: NextRequest) {
+  // Allow all requests to proceed
+  // Authentication is handled in the AuthContext and components
+  return NextResponse.next();
+}
 
-export default clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) await auth.protect();
-});
-
+// Don't run middleware on static files, API routes, or specific paths
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - static image files
+     */
+    '/((?!api|_next/static|_next/image|favicon|robots.txt|sitemap.xml).*)',
+  ],
 };

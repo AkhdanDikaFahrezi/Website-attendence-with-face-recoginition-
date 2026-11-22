@@ -36,9 +36,51 @@ yarn-error.log*
 # vercel
 .vercel
 
-# typescript
+# typescript     
 *.tsbuildinfo
 next-env.d.ts
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python virtual environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Sensitive biometric data
+attendance_faces.pkl
+*.pkl
+
+# Build and cache
+.next/
+node_modules/
+dist/
+build/
+
+# Local development files
+.DS_Store
+*.log
+
+# Private academic documents
+_cleanup_review/
+
+# Additional Python and test caches
+*.py[cod]
+*.pickle
+**/.cache/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.hypothesis/
+playwright-report/
+test-results/
+.turbo/
+
