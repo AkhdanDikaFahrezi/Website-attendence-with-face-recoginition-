@@ -115,11 +115,12 @@ export async function fetchUserProfile(nim: string) {
     // If data is null or empty array, it means no user was found, which is not an error
     console.log(`User profile for NIM ${nim} not found`);
     return null;
-  } catch (error: any) {
-    console.error('Error in fetchUserProfile:', error?.message || error);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Error in fetchUserProfile:', errorMessage);
 
     // Check if this is a network error
-    if (error?.name === 'TypeError' || error?.message?.includes('fetch')) {
+    if (error instanceof TypeError || (error instanceof Error && error.message.includes('fetch'))) {
       console.warn('Network error occurred, returning fallback data');
       return { nim, nama: 'User', jurusan: '', kelas: '', semester: '', email: '' };
     }
@@ -162,7 +163,9 @@ export async function updateUserProfile(nim: string, profileData: Partial<{ name
 
     // Map the 'name' field to 'nama' to match the database schema
     const { name, ...otherProfileData } = profileData;
-    const updateData: any = {
+    const updateData: Partial<{ nama: string; jurusan: string; kelas: string; semester: string; email: string }> & {
+      updated_at: string;
+    } = {
       ...otherProfileData,
       updated_at: new Date().toISOString()
     };
@@ -191,7 +194,7 @@ export async function updateUserProfile(nim: string, profileData: Partial<{ name
       console.warn(`No profile found for NIM ${nim} to update`);
       return null;
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error in updateUserProfile:', error);
     throw error;
   }

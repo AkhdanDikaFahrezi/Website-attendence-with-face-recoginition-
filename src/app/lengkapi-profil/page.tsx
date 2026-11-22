@@ -203,7 +203,7 @@ export default function LengkapiProfilPage() {
                     placeholder="Masukkan email aktif Anda"
                   />
                   <p className="text-xs text-gray-500">
-                    Gunakan email dengan akhiran "@admin" atau "@dosen" untuk akses admin
+                    Gunakan email dengan akhiran &quot;@admin&quot; atau &quot;@dosen&quot; untuk akses admin
                   </p>
                 </div>
               </div>

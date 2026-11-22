@@ -81,10 +81,6 @@ export default function RegisterPage() {
         faceImages,
       });
 
-      if (result.error) {
-        throw result.error;
-      }
-
       if (result.enrollmentError) {
         toast.warning(`Akun berhasil dibuat, tetapi pendaftaran wajah belum selesai: ${result.enrollmentError}`);
       } else {

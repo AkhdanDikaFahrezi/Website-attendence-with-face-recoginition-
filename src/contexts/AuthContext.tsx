@@ -7,6 +7,12 @@ import { logPerformanceSafe } from '@/services/performance-service';
 
 export type UserRole = 'student' | 'admin';
 
+type SignInResult = Awaited<ReturnType<typeof supabase.auth.signInWithPassword>>;
+type SignUpResult = Awaited<ReturnType<typeof supabase.auth.signUp>>['data'] & {
+  enrollmentError?: string;
+};
+type ForgotPasswordResult = Awaited<ReturnType<typeof supabase.auth.resetPasswordForEmail>>;
+
 interface User {
   id: string;
   email?: string;
@@ -24,10 +30,10 @@ interface AuthContextType {
   isAuthReady: boolean;
   isAdmin: boolean;
   isProfileComplete: boolean;
-  signIn: (email: string, password: string) => Promise<unknown>;
-  signUp: (input: SignUpInput) => Promise<unknown>;
+  signIn: (email: string, password: string) => Promise<SignInResult>;
+  signUp: (input: SignUpInput) => Promise<SignUpResult>;
   signOut: () => Promise<void>;
-  forgotPassword: (email: string) => Promise<unknown>;
+  forgotPassword: (email: string) => Promise<ForgotPasswordResult>;
 }
 
 interface SignUpInput {

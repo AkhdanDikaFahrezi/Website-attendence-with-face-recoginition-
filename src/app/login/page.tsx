@@ -29,9 +29,11 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const result = await signIn(email, password);
-      
-      if (result.error) {
+      const result = (await signIn(email, password)) as
+        | { error?: unknown }
+        | undefined;
+
+      if (result?.error) {
         throw result.error;
       }
 
